@@ -11,6 +11,8 @@ Ext.define('Module.messages.view.Grid', {
     multiSelect: true,
     headerBorders: false,
 
+    viewModel: Ext.create('Module.messages.model.ViewModel'),
+
     viewConfig: {
         enableTextSelection: true
     },
@@ -18,6 +20,11 @@ Ext.define('Module.messages.view.Grid', {
     tbar: [{
         action: 'add',
         text: 'New message'
+    },'->',{
+        xtype: 'label',
+        bind: {
+            text: '{online}'
+        }
     }],
 
     columns: [{

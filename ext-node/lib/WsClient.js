@@ -45,13 +45,18 @@ Ext.define('Core.WsClient', {
         const cls = Ext.create(data.header.class, {
             wsClient: this
         })
-        const method = '$' + data.header.method;
+        const method = (data.header.method[0] == '$'? '':'$') + data.header.method;
         if(cls) {
             if(!!cls[method]) {
                 // request
                 if(data.header.id) {
                     try {
-                        const result = await cls[method](data.data);
+                        let result;
+                        if(data.data && data.data.arguments) {
+                            result = await cls[method].apply(cls, data.data.arguments);
+                        } else {
+                            result = await cls[method](data.data);
+                        }
                         this.sendResponse(data.header.id, 'OK', result);
                     } catch(e) {
                         this.sendResponse(data.header.id, 'Error', e);

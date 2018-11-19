@@ -6,6 +6,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "express-static": "^1.2.6",
+    "kue": "^0.11.6",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {},

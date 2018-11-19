@@ -4,11 +4,11 @@ Ext.define('Module.messages.store.MessagesStore', {
 
     autoLoad: true,
     pageSize: null,
-
-    fields: ['sender', 'subject', 'messages'],
+    model: 'Module.messages.model.GridModel'
+    /*fields: ['sender', 'subject', 'messages'],
     data: [{
         sender: 'Tester',
         subject: 'Test subject',
         message: 'Text'
-    }]
+    }]*/
 });

@@ -18,25 +18,26 @@ Ext.define('Core.WSocket', {
     }
 
     ,reconnect() {
-        setTimeout(() => {
+        if(!!this.reconnectTm) clearTimeout(this.reconnectTm);
+        this.reconnectTm = setTimeout(() => {
             this.connect();
-        }, 100)
+        }, 1000)
     }
 
     ,connect() {
         this.ws = new WebSocket(this.getUrl(this.token));
-
+        
         this.ws.onopen = () => {
             this.READY = true;
         };
         
         this.ws.onclose = (event) => {
-            if (event.wasClean) {
+            //if (event.wasClean) {
                 //this.fireEvent ('closeByServer', this);
-            } else {
+            //} else {
                 //this.fireEvent ('lostConnection', this);
                 this.reconnect()
-            }
+            //}
         };
           
         this.ws.onmessage = (event) => {
@@ -59,7 +60,8 @@ Ext.define('Core.WSocket', {
             if(data && data.header) 
                 return data;
         } catch(e) {
-            this.error(e)
+            console.log(msg)
+            //this.error(e)
         }
         return;
     }
