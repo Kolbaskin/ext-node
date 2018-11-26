@@ -11,7 +11,12 @@ Ext.Loader.setConfig({
 this.token = Ext.data.identifier.Uuid.createRandom()();
 
 Ext.WS = Ext.create('Core.WSocket', {
-    token: this.token
+    token: this.token,
+    listeners: {
+        closebyserver: () => {console.log('WS closebyserver');},
+        lostconnection: () => {console.log('WS lostconnection');},
+        ready:() => {console.log('WS ready');}
+    }
 });
 
 Ext.application({

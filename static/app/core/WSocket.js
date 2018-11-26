@@ -1,16 +1,11 @@
-/**
- * @class Core.WSockets
- * @extend Ext.ux.WebSocket
- * @author Max tushev
- * Websocket superclass
- */
 Ext.define('Core.WSocket', {
 
     mixins: {
-        observable: 'Ext.util.Observable'
-    } 
-    
+        observable : 'Ext.util.Observable'
+    }
+
     ,constructor(cfg) {
+        this.mixins.observable.constructor.call(this, cfg);
         this.callbacks = {}
         this.READY = false;
         this.token = cfg.token;        
@@ -28,28 +23,29 @@ Ext.define('Core.WSocket', {
         this.ws = new WebSocket(this.getUrl(this.token));
         
         this.ws.onopen = () => {
+            this.fireEvent ('ready', this);
             this.READY = true;
         };
         
         this.ws.onclose = (event) => {
-            //if (event.wasClean) {
-                //this.fireEvent ('closeByServer', this);
-            //} else {
-                //this.fireEvent ('lostConnection', this);
+            if (event.wasClean) {
+                this.fireEvent ('closebyserver', this);
+            } else {
+                this.fireEvent ('lostconnection', this);
                 this.reconnect()
-            //}
+            }
         };
           
         this.ws.onmessage = (event) => {
             const data = this.parseData(event.data);           
             if(data) {
-                //this.fireEvent ('ondata', data);
+                this.fireEvent ('ondata', data);
                 this.doAction(data);
             }
         };
           
         this.ws.onerror = (error) => {
-            //this.fireEvent('error', error.message);
+            this.fireEvent('error', error.message);
             this.reconnect();
         };
     }

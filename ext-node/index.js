@@ -17,6 +17,10 @@ Ext.Loader.setConfig({
     }]
 });
 
+Ext.log = function(err) {
+    console.log(err)
+}
+
 module.exports = function(cfg) {
     websockets(cfg);    
 }
