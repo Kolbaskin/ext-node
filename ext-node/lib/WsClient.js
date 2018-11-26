@@ -2,10 +2,15 @@ Ext.define('Core.WsClient', {
 
     apiVersion: '0.1.0'
 
-    ,constructor(cfg) {       
+    ,mixins: ['Core.MemStorage', 'Core.Queue']
+
+    ,constructor(cfg) {         
+       
         this.ws = cfg.ws;
         this.token = cfg.token;
         this.connections = cfg.connections;
+
+        this.onStart();
 
         this.ws.on('message', (msg) => {
             this.onMessage(msg);
@@ -13,6 +18,14 @@ Ext.define('Core.WsClient', {
 
         this.ws.on('close', () => {
             this.onClose();
+        })
+    }
+
+    ,async onStart() {
+        await this.setMemKey(`client:${this.token}`, "1");
+        await this.queueProcess(`client:${this.token}`, async (data, done) => {
+            const res = await this.prepareClientEvents(data);
+            done(res);
         })
     }
 
@@ -81,6 +94,7 @@ Ext.define('Core.WsClient', {
     }
 
     ,onClose() {
+        this.delMemKey(`inst:${this.token}`);
         delete this.connections[this.token];
     }
 
@@ -102,6 +116,17 @@ Ext.define('Core.WsClient', {
     }
 
     ,checkVersion(data) {
+        return true;
+    }
+
+    ,async prepareClientEvents(data) {
+        this.send({
+            header: {
+                class: data.class,
+                event: data.event
+            },
+            data: data.data
+        })
         return true;
     }
 

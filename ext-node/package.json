@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "express-ws": "^4.0.0",
-    "janusjs-extjs-node": "0.0.1"
+    "janusjs-extjs-node": "0.0.1",
+    "redis": "^2.8.0",
+    "uuid": "^3.3.2"
   }
 }

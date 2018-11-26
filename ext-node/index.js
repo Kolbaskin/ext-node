@@ -17,6 +17,6 @@ Ext.Loader.setConfig({
     }]
 });
 
-module.exports = function(app) {
-    websockets(app);    
+module.exports = function(cfg) {
+    websockets(cfg);    
 }

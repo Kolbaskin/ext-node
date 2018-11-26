@@ -20,9 +20,7 @@ Ext.define('Module.messages.model.GridModel', {
 
     /* scope:server */
     ,async $test(a, b, data) {
-
-        this.fireEvent('datachange', 'all', 'online')
-
+        await  this.fireEvent('datachange', {state:'online'});
         return {
             a,
             b,

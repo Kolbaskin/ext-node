@@ -1,15 +1,22 @@
 
 const express = require('express');
-const serve   = require('express-static');
+const staticSrv   = require('express-static');
 const app = express();
-require('./ext-node')(app); 
+global = {
+     config: require('config')
+}
+require('./ext-node')({
+    app,
+    wsClient: 'Base.wsClient' 
+}); 
 
-Ext.Loader.setPath('Api', 'protected/rest')
+app.use(staticSrv(__dirname + '/static'));
+
+Ext.Loader.setPath('Api', 'protected/rest');
+Ext.Loader.setPath('Base', 'protected/base');
 
 app.use('/api/auth', Ext.create('Api.auth.Main'));
 
-app.use(serve(__dirname + '/static'));
-
 const server = app.listen(3000, function(){
-  console.log('server is running at %s', server.address().port);
+    console.log('server is running at %s', server.address().port);
 });

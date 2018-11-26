@@ -9,11 +9,11 @@ Ext.define('Module.messages.model.ViewModel', {
     constructor: function() {
         Ext.create('Module.messages.model.GridModel', {
             listeners: {
-                datachange: (mdl, data) => {
-                    this.set('online', data.online)
+                datachange: (data) => {                 
+                    this.set('online', data.state)
                 }
             }
-        })
+        });        
         this.callParent(arguments)
     }
 })

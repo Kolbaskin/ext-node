@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "config": "^3.0.0",
     "express": "^4.16.4",
     "express-static": "^1.2.6",
     "kue": "^0.11.6",

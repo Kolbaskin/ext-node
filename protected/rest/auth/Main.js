@@ -9,7 +9,12 @@ Ext.define('Api.auth.Main', {
     ]
 
     ,async login(data) {
-        return data
+        return {data:[{
+            id:1,
+            subject: 111,
+            sender:222,
+            
+        }]}
     }
 
     ,async restoreLogin() {

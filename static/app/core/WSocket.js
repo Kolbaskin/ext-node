@@ -41,7 +41,7 @@ Ext.define('Core.WSocket', {
         };
           
         this.ws.onmessage = (event) => {
-            const data = this.parseData(event.data);
+            const data = this.parseData(event.data);           
             if(data) {
                 //this.fireEvent ('ondata', data);
                 this.doAction(data);
@@ -71,9 +71,25 @@ Ext.define('Core.WSocket', {
             if(data.header.status) {
                 // response
                 this.doResponse(data);
-            } else {
+            } else
+            if(data.header.event) {
+                this.doEvent(data);
+            } else
+            if(data.header.method) {
                 // request
                 this.doRequest(data);
+            }
+        }
+    }
+
+    ,doEvent(data) {
+        if(
+            data.header.class && 
+            Ext.classInstances &&
+            Ext.classInstances[data.header.class]
+        ) {
+            for(let i in Ext.classInstances[data.header.class]) {
+                Ext.classInstances[data.header.class][i].fireEvent(data.header.event, data.data)
             }
         }
     }
