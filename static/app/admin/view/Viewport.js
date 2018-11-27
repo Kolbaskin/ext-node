@@ -1,18 +1,42 @@
 Ext.define('Admin.view.Viewport', {
     extend: 'Ext.container.Viewport',
     xtype: 'mainviewport',
-    requires: [],
+    requires: [
+        'Module.users.view.Grid', 
+        'Module.messages.view.Grid',
+        'Module.messages.view.Form'
+    ],
     cls: 'sencha-dash-viewport',
     itemId: 'mainView',
 
-    layout: 'fit',
+    layout: 'border',
 
     listeners: {
         //render: 'onMainViewRender'
     },
 
     items: [
-        Ext.create('Module.messages.view.Grid')
-        //Ext.create('Module.chart.view.Chart')
+        {
+            xtype: 'users-grid',
+            id: 'users-grid',
+            region: 'west',
+            split: true,
+            width: 300
+        }, {
+            xtype: 'panel',
+            layout: 'border',
+            region: 'center',
+            border: false,
+            bodyBorder: false,
+            items: [{
+                xtype: 'messages-grid',
+                region: 'center'
+            },{
+                xtype: 'message-form',
+                region: 'south',
+                split: true,
+                height: 25
+            }]
+        }
     ]
 });

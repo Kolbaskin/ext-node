@@ -1,6 +1,8 @@
 Ext.define('Api.auth.Main', {
     extend: 'Api.Base',
     
+    // определяем суброуты
+    // и определяем соответствующие методы 
     routes: [
         { path: '/', get: 'login'},
         { path: '/restore', post: 'restoreLogin' },
@@ -8,6 +10,8 @@ Ext.define('Api.auth.Main', {
         { path: '/users', get: 'allUsers'}    
     ]
 
+    // на вход подаются параметры запроса:
+    // {query: <...>, params: <...>, body: <...>}
     ,async login(data) {
         return {data:[{
             id:1,

@@ -8,7 +8,8 @@ Ext.define('Core.WSocket', {
         this.mixins.observable.constructor.call(this, cfg);
         this.callbacks = {}
         this.READY = false;
-        this.token = cfg.token;        
+        this.token = cfg.token; 
+        this.user = cfg.user;        
         this.connect();
     }
 
@@ -130,7 +131,7 @@ Ext.define('Core.WSocket', {
         const uriArr = location.href.split('/')
             ,host = uriArr[2]
             ,protocole = uriArr[0] == 'https:'? 'wss':'ws';  
-        return protocole + "://" + host + "/ext?token=" + encodeURIComponent(token);
+        return protocole + "://" + host + "/ext?token=" + encodeURIComponent(token)+'&user='+encodeURIComponent(this.user);
     }
 
     ,doResponse(data) {

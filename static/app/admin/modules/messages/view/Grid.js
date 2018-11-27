@@ -4,6 +4,7 @@ Ext.define('Module.messages.view.Grid', {
     
     controller: Ext.create('Module.messages.view.GridController'),
     store: Ext.create('Module.messages.store.MessagesStore'),
+    viewModel: Ext.create('Module.messages.model.ViewModel'),
 
     title: 'Messages',
     
@@ -11,7 +12,7 @@ Ext.define('Module.messages.view.Grid', {
     multiSelect: true,
     headerBorders: false,
 
-    viewModel: Ext.create('Module.messages.model.ViewModel'),
+    
 
     viewConfig: {
         enableTextSelection: true
@@ -29,13 +30,9 @@ Ext.define('Module.messages.view.Grid', {
 
     columns: [{
         text: 'Sender',
-        flex: 1,
-        dataIndex: 'sender'
-    }, {
-        text: 'Subject',
-        flex: 1,
-        dataIndex: 'subject'
-    }, {
+        width: 150,
+        dataIndex: 'user'
+    },{
         text: 'Message',
         flex: 1,
         dataIndex: 'message'

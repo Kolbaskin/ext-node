@@ -7,7 +7,9 @@ Ext.define('Core.WsClient', {
     ,constructor(cfg) {         
        
         this.ws = cfg.ws;
+        this.req = cfg.req;
         this.token = cfg.token;
+
         this.connections = cfg.connections;
 
         this.onStart();
@@ -31,6 +33,7 @@ Ext.define('Core.WsClient', {
 
     ,onMessage(msg) {
         let data;
+       
         try {
             data =JSON.parse(msg);
         } catch(e) {
@@ -94,7 +97,7 @@ Ext.define('Core.WsClient', {
     }
 
     ,onClose() {
-        this.delMemKey(`inst:${this.token}`);
+        this.delMemKey(`client:${this.token}`);
         delete this.connections[this.token];
     }
 

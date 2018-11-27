@@ -1,14 +1,18 @@
 
 Ext.define('Module.messages.store.MessagesStore', {
-    extend: 'Core.data.Store',
+    extend: 'Ext.data.Store',
 
-    autoLoad: true,
-    pageSize: null,
-    //model: 'Module.messages.model.GridModel'
-    fields: ['sender', 'subject', 'messages'],
-    data: [{
-        sender: 'Tester',
-        subject: 'Test subject',
-        message: 'Text'
-    }]
+    fields: ['user', 'message'],
+
+    constructor() {
+        Ext.create('Module.messages.model.GridModel', {
+            listeners: {
+                newmessage: (mess) => {
+                    this.add(mess)
+                }
+            }
+        })
+        this.callParent(arguments);
+    }
+    
 });

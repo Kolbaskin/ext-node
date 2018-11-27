@@ -1,18 +1,7 @@
 Ext.define('Module.messages.model.GridModel', {
     extend: 'Core.data.DataModel'
 
-    ,fields: ['id', 'sender', 'subject', 'message']
-
-/*    ,requires: ['Core.data.WsProxy']
-
-    ,proxy: {
-        type: 'wsproxy',
-        url : '/data.json'
-    }
-*/
-
-
-    /* scope:client */
+      /* scope:client */
     ,async test(data) {
         const result = await this.$test(1,2, data);
         console.log(result)
@@ -29,5 +18,20 @@ Ext.define('Module.messages.model.GridModel', {
         }
     }
 
+    /* scope:server */
+    ,async $newmessage(data) {
+        const msg = {
+            user: data.user,
+            message: data.message
+        }
+        if(data.to && Ext.isArray(data.to) && data.to.length) {
+            data.to.forEach((id) => {
+                this.fireEvent('newmessage', id, msg);
+            })
+        } else {
+            this.fireEvent('newmessage', 'all', msg);
+        }
+        return true;        
+    }
 
 })

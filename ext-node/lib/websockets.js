@@ -15,7 +15,7 @@ setInterval(() => {
 
 let connections = {}
 
-let addWsConnection = (token, ws, wsClient) => {
+let addWsConnection = (token, ws, req, wsClient) => {
   
     if(connections[token]) {
         ws.send('Error! This agent is already connected.')
@@ -25,6 +25,7 @@ let addWsConnection = (token, ws, wsClient) => {
 
     connections[token] = Ext.create(wsClient, {
         ws,
+        req,
         token,
         connections
     });
@@ -40,7 +41,7 @@ queue.process(`inst:${sessionKey}`, (job, done) => {
 module.exports = function(cfg) {
     expressWs(cfg.app);
     cfg.app.ws('/ext', function(ws, req) { 
-        addWsConnection(req.query.token, ws, cfg.wsClient || 'Core.WsClient');        
+        addWsConnection(req.query.token, ws, req, cfg.wsClient || 'Core.WsClient');        
     });
 }
 

@@ -25,7 +25,7 @@ Ext.define('Core.data.DataModel', {
         } else {
             const log = await this.checkAgentOnline(destination);
             if(log) {
-                items = [destination];
+                items = ['client:' + destination];
             } 
         }       
         if(items) {
@@ -52,7 +52,7 @@ Ext.define('Core.data.DataModel', {
         for(let i=0;i<agents.length;i++) {
             log = await this.checkAgentOnline(agents[i]);
             if(log)
-                res.push(agents[i]);
+                res.push('client:'+agents[i]);
         }
         return res;        
     }
